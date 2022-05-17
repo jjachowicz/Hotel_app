@@ -1,18 +1,34 @@
 package com.example.demo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "guests")
 public class GuestEntity {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "surname", nullable = false)
     private String surname;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "pesel", nullable = false)
     private String pesel;
+
+    @Column(name = "phone_number", nullable = false )
     private String phoneNumber;
 
     public GuestEntity() {
     }
 
-    public GuestEntity(int id, String name, String surname, String email, String pesel, String phoneNumber) {
+    public GuestEntity(long id, String name, String surname, String email, String pesel, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -21,7 +37,7 @@ public class GuestEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
