@@ -1,15 +1,19 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+
+import org.springframework.data.domain.PageRequest;
+
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,9 @@ public class GuestController {
 
     @Autowired
     private GuestRepository guestRepository;
+
+    @Autowired
+    private GuestPagingRepository guestPagingRepository;
 
     // get list of guests
     @RequestMapping(
@@ -81,7 +88,46 @@ public class GuestController {
         return ResponseEntity.of(foundGuestOptional);
     }
 
+    // sort guests a-z by name
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/guests/sortfromatoz",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<GuestEntity>> sortFromAtoZ() {
+        return ResponseEntity.ok(this.guestRepository.findAllByOrderByNameAsc());
+    }
 
+    // sort guests z-a by name
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/guests/sortfromztoa",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<GuestEntity>> sortFromZtoA() {
+        return ResponseEntity.ok(this.guestRepository.findAllByOrderByNameDesc());
+    }
 
+    // pagination
+    // /api/guests/pagination?page-number=0&page-size=3
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/guests/pagination",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<GuestEntity>> getPagination(
+            @RequestParam(required = false, name="page-number", defaultValue = "1") Integer pageNumber,
+            @RequestParam(required = false, name="page-size", defaultValue = "20") Integer pageSize
+    ) {
+        //Pageable paging = PageRequest.of(0, 3 );
+        Pageable paging = PageRequest.of(pageNumber, pageSize );
+        Page<GuestEntity> pagedResult = this.guestPagingRepository.findAll(paging);
+        List<GuestEntity> guestEntities = pagedResult.getContent();
+
+        return ResponseEntity.ok(guestEntities);
+    }
 
 }
