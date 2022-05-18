@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class GuestController {
@@ -53,7 +54,33 @@ public class GuestController {
         return ResponseEntity.ok(this.guestRepository.save(guestEntity));
     }
 
-    // edit user
+    // edit guest
+    // POST http://localhost:8080/api/users/1/update
+    // echo '{"name":"chris", "surname":"johnson", "email":"chris@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/edit/1
+    @RequestMapping(
+            method = RequestMethod.PUT,
+            value = "api/guests/edit/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<GuestEntity> editGuest(
+            @PathVariable("id") Long guestId,
+            @RequestBody GuestEntity newGuestEntity
+    ) {
+        Optional<GuestEntity> foundGuestOptional = this.guestRepository.findById(guestId);
+        if (foundGuestOptional.isPresent()) {
+            GuestEntity foundGuestEntity = foundGuestOptional.get();
+            foundGuestEntity.setName(newGuestEntity.getName());
+            foundGuestEntity.setSurname(newGuestEntity.getSurname());
+            foundGuestEntity.setEmail(newGuestEntity.getEmail());
+            foundGuestEntity.setPesel(newGuestEntity.getPesel());
+            foundGuestEntity.setPhoneNumber(newGuestEntity.getPhoneNumber());
+            this.guestRepository.save(foundGuestEntity);
+        }
+        return ResponseEntity.of(foundGuestOptional);
+    }
+
 
 
 
