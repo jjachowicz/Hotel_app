@@ -1,5 +1,8 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.Entities.GuestEntity;
+import com.example.demo.GuestPagingRepository;
+import com.example.demo.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +16,6 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +51,7 @@ public class GuestController {
     }
 
     // create new guest
-    //echo '{"name":"john", "surname":"smith", "email":"john@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/create
+    //echo '{"name":"mary", "surname":"smith", "email":"mary@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/create
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/api/guests/create",
@@ -63,7 +65,7 @@ public class GuestController {
 
     // edit guest
     // POST http://localhost:8080/api/users/1/update
-    // echo '{"name":"chris", "surname":"johnson", "email":"chris@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/edit/1
+    // echo '{"name":"chris", "surname":"johnson1", "email":"chris@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/edit/1
     @RequestMapping(
             method = RequestMethod.PUT,
             value = "api/guests/edit/{id}",
