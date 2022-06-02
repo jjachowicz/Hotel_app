@@ -14,10 +14,10 @@ public class RoomEntity {
     @Column(name = "size", nullable = false)
     private int size;
 
-    @Column(name = "pricePerNight", nullable = false)
+    @Column(name = "price_per_night", nullable = false)
     private double pricePerNight;
 
-    @Column(name = "isReserved", nullable = false)
+    @Column(name = "is_reserved", nullable = false)
     private boolean isReserved;
 
     public RoomEntity() {
