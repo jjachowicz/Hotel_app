@@ -1,11 +1,13 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Entities.GuestEntity;
 import com.example.demo.Entities.RoomEntity;
 import com.example.demo.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,7 +22,15 @@ public class RoomController {
     private RoomRepository roomRepository;
 
     // list all rooms
-    // to do
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/rooms",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<RoomEntity>> getRooms() {
+        return ResponseEntity.ok(this.roomRepository.findAll());
+    }
 
     // list free rooms
     @RequestMapping(
@@ -31,6 +41,17 @@ public class RoomController {
     @Transactional
     public ResponseEntity<List<RoomEntity>> freeRooms() {
         return ResponseEntity.ok(this.roomRepository.findFreeRoomEntity());
+    }
+
+    // list room by number
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/rooms/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<RoomEntity> getRoom(@PathVariable("id") Long roomId ) {
+        return ResponseEntity.of(this.roomRepository.findById(roomId));
     }
 
 }
