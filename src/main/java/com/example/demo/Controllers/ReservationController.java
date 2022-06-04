@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -32,7 +30,7 @@ public class ReservationController {
     }
 
     // add new reservation
-    //echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/create
+    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/create
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/api/reservations/create",
@@ -43,4 +41,23 @@ public class ReservationController {
     public ResponseEntity<ReservationEntity> createReservation(@RequestBody ReservationEntity reservationEntity) {
         return ResponseEntity.ok(this.reservationRepository.save(reservationEntity));
     }
+
+
+
+    // delete a reservation
+    // curl -X DELETE  http://localhost:8080/api/reservations/3/remove
+
+    @RequestMapping(
+            value = "/api/reservations/{id}/remove",
+            method = RequestMethod.DELETE
+    )
+    @ResponseBody
+    public String deleteReservation(
+            @PathVariable("id") Long reservationId) {
+        this.reservationRepository.deleteById(reservationId);
+        //return ResponseEntity.ok(this.reservationRepository.findById(reservationId));
+        return " Reservation " + reservationId + " deleted.";
+    }
+
+
 }
