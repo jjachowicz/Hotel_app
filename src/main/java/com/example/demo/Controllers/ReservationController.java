@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,5 +29,18 @@ public class ReservationController {
     @Transactional
     public ResponseEntity<List<ReservationEntity>> getReservations() {
         return ResponseEntity.ok(this.reservationRepository.findAll());
+    }
+
+    // add new reservation
+    //echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/create
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/api/reservations/create",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<ReservationEntity> createReservation(@RequestBody ReservationEntity reservationEntity) {
+        return ResponseEntity.ok(this.reservationRepository.save(reservationEntity));
     }
 }
