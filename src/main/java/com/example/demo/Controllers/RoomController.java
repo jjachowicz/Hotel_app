@@ -54,4 +54,16 @@ public class RoomController {
         return ResponseEntity.of(this.roomRepository.findById(roomId));
     }
 
+    // find rooms which are bigger than...
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/biggerrooms",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<RoomEntity>> getBiggerRooms() {
+        return ResponseEntity.ok(this.roomRepository.findRoomsWhereSizeMoreThan());
+    }
+
+
 }

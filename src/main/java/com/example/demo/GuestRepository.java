@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import com.example.demo.Entities.GuestEntity;
+import com.example.demo.Entities.RoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +16,10 @@ public interface GuestRepository extends JpaRepository<GuestEntity, Long> {
     Optional<GuestEntity> findById(Long id);
     List<GuestEntity> findAllByOrderByNameAsc();
     List<GuestEntity> findAllByOrderByNameDesc();
+
+    @Query(value = "SELECT * FROM guests WHERE name LIKE 'z%' AND surname LIKE 'e%'",
+            nativeQuery = true)
+    List<GuestEntity> findUserWhereNameAndSurnameLike();
 
 }
 

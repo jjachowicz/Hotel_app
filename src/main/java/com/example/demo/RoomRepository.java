@@ -19,4 +19,9 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Long> {
     List<RoomEntity> findFreeRoomEntity();
 
     Optional<RoomEntity> findById(Long id);
+
+    @Query(value = "SELECT * FROM rooms WHERE size > 20",
+            nativeQuery = true)
+    List<RoomEntity> findRoomsWhereSizeMoreThan();
+
 }

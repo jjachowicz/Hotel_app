@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Entities.GuestEntity;
+import com.example.demo.Entities.RoomEntity;
 import com.example.demo.GuestPagingRepository;
 import com.example.demo.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,20 @@ public class GuestController {
         List<GuestEntity> guestEntities = pagedResult.getContent();
 
         return ResponseEntity.ok(guestEntities);
+    }
+
+
+    ///////////////////////
+
+    // find user by name and surname
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/finduser",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<GuestEntity>> findUser() {
+        return ResponseEntity.ok(this.guestRepository.findUserWhereNameAndSurnameLike());
     }
 
 }
