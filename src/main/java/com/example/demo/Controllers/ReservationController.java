@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ReservationController {
@@ -42,8 +43,6 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationRepository.save(reservationEntity));
     }
 
-
-
     // delete a reservation
     // curl -X DELETE  http://localhost:8080/api/reservations/3/remove
 
@@ -57,6 +56,29 @@ public class ReservationController {
         this.reservationRepository.deleteById(reservationId);
         //return ResponseEntity.ok(this.reservationRepository.findById(reservationId));
         return " Reservation " + reservationId + " deleted.";
+    }
+
+
+    // edit a reservation
+    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-26"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/edit/1
+    @RequestMapping(
+            method = RequestMethod.PUT,
+            value = "api/reservations/edit/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<ReservationEntity> editReservation(
+            @PathVariable("id") Long reservationId,
+            @RequestBody ReservationEntity newReservationEntity
+    ) {
+        Optional<ReservationEntity>  foundReservationOptional = this.reservationRepository.findById(reservationId);
+        if (foundReservationOptional.isPresent()) {
+            ReservationEntity foundReservationEntity = foundReservationOptional.get();
+            foundReservationEntity.setReservationDate(newReservationEntity.getReservationDate());
+            this.reservationRepository.save(foundReservationEntity);
+        }
+        return ResponseEntity.of(foundReservationOptional);
     }
 
 
