@@ -2,6 +2,8 @@ package com.example.demo.Entities;
 
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
@@ -19,6 +21,9 @@ public class RoomEntity {
 
     @Column(name = "is_reserved", nullable = false)
     private boolean isReserved;
+
+    @OneToMany(mappedBy = "room")
+    private List<ReservationEntity> reservations;
 
     public RoomEntity() {
 
