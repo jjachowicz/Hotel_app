@@ -20,4 +20,10 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             nativeQuery = true)
 
     List<ReservationEntity> findReservationEntities(@Param("id") Long id);
+
+    // select all reservations of a given room
+    @Query(value = "SELECT * FROM reservations r LEFT JOIN rooms rm ON r.room_id = rm.id WHERE rm.id = :id",
+            nativeQuery = true)
+
+    List<ReservationEntity> findReservationEntitiesByRoomid(@Param("id") Long id);
 }

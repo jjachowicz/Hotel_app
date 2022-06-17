@@ -95,4 +95,16 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationRepository.findReservationEntities(guestId));
     }
 
+    //findReservationEntitiesByRoomid
+    // select all reservations of a given room
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/roomreservations/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<ReservationEntity>> getRoomReservations(@PathVariable("id") Long roomId) {
+        return ResponseEntity.ok(this.reservationRepository.findReservationEntitiesByRoomid(roomId));
+    }
+
 }
