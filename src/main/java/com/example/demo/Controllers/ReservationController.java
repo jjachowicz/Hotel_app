@@ -31,7 +31,7 @@ public class ReservationController {
     }
 
     // add new reservation
-    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/create
+    // echo '{"guest":{"id":1,"name":"chris1","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/create
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/api/reservations/create",
@@ -44,7 +44,7 @@ public class ReservationController {
     }
 
     // delete a reservation
-    // curl -X DELETE  http://localhost:8080/api/reservations/3/remove
+    // curl -X DELETE  http://localhost:8080/api/reservations/2/remove
 
     @RequestMapping(
             value = "/api/reservations/{id}/remove",
@@ -60,7 +60,7 @@ public class ReservationController {
 
 
     // edit a reservation
-    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-26"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/edit/1
+    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-08-26"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/edit/1
     @RequestMapping(
             method = RequestMethod.PUT,
             value = "api/reservations/edit/{id}",
@@ -81,5 +81,19 @@ public class ReservationController {
         return ResponseEntity.of(foundReservationOptional);
     }
 
+
+
+    /////////
+    // find all reservations of a given user
+    // findReservationEntities
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/userreservations",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<ReservationEntity>> getUserReservations() {
+        return ResponseEntity.ok(this.reservationRepository.findReservationEntities());
+    }
 
 }
