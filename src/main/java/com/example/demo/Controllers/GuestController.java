@@ -47,7 +47,7 @@ public class GuestController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Transactional
-    public ResponseEntity<GuestEntity> getGuest(@PathVariable("id") Long guestId ) {
+    public ResponseEntity<GuestEntity> getGuest(@PathVariable("id") Long guestId) {
         return ResponseEntity.of(this.guestRepository.findById(guestId));
     }
 

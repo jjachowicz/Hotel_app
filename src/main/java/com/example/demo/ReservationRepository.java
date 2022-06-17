@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.Entities.ReservationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,9 +15,9 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     Optional<ReservationEntity> findById(Long id);
     void deleteById(Long id);
 
-    //@Query(value = "SELECT * FROM reservations LEFT JOIN guests ON reservations.guest_id = guests.id",
-            //nativeQuery = true)
-    @Query(value = "SELECT * FROM reservations WHERE guest_id = 1",
+    // select all reservations of a given guest
+    @Query(value = "SELECT * FROM reservations r LEFT JOIN guests g ON r.guest_id = g.id WHERE g.id = :id",
             nativeQuery = true)
-    List<ReservationEntity> findReservationEntities();
+
+    List<ReservationEntity> findReservationEntities(@Param("id") Long id);
 }

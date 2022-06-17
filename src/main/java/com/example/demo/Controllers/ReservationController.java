@@ -84,16 +84,15 @@ public class ReservationController {
 
 
     /////////
-    // find all reservations of a given user
-    // findReservationEntities
+    // select all reservations of a given guest
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/api/userreservations",
+            value = "/api/userreservations/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Transactional
-    public ResponseEntity<List<ReservationEntity>> getUserReservations() {
-        return ResponseEntity.ok(this.reservationRepository.findReservationEntities());
+    public ResponseEntity<List<ReservationEntity>> getUserReservations(@PathVariable("id") Long guestId) {
+        return ResponseEntity.ok(this.reservationRepository.findReservationEntities(guestId));
     }
 
 }
