@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Entities.GuestEntity;
+import com.example.demo.Entities.ReservationEntity;
 import com.example.demo.Entities.RoomEntity;
 import com.example.demo.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,19 @@ public class RoomController {
     @Transactional
     public ResponseEntity<List<RoomEntity>> getBiggerRooms() {
         return ResponseEntity.ok(this.roomRepository.findRoomsWhereSizeMoreThan());
+    }
+
+
+    ////////
+    // find most visited rooms
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/mostvisitedroom",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<RoomEntity>> getFavouriteRoom() {
+        return ResponseEntity.ok(this.roomRepository.findMostVisitedRoom());
     }
 
 

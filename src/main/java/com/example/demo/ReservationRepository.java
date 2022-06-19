@@ -26,4 +26,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             nativeQuery = true)
 
     List<ReservationEntity> findReservationEntitiesByRoomid(@Param("id") Long id);
+
+
 }

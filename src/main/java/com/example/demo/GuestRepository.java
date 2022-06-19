@@ -21,5 +21,11 @@ public interface GuestRepository extends JpaRepository<GuestEntity, Long> {
             nativeQuery = true)
     List<GuestEntity> findUserWhereNameAndSurnameLike();
 
+    // find most frequent guest
+    @Query(value = "SELECT * FROM guests g LEFT JOIN reservations re ON g.id = re.guest_id GROUP BY guest_id ORDER BY Count(guest_id) DESC LIMIT 1",
+            nativeQuery = true)
+
+    List<GuestEntity> findMostFrequentGuest();
+
 }
 

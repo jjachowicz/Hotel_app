@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.Entities.GuestEntity;
+import com.example.demo.Entities.ReservationEntity;
 import com.example.demo.Entities.RoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,11 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Long> {
     @Query(value = "SELECT * FROM rooms WHERE size > 20",
             nativeQuery = true)
     List<RoomEntity> findRoomsWhereSizeMoreThan();
+
+    // find most reserved room
+    @Query(value = "SELECT * FROM rooms ro LEFT JOIN reservations re ON ro.id = re.room_id GROUP BY room_id ORDER BY Count(room_id) DESC LIMIT 1",
+            nativeQuery = true)
+
+    List<RoomEntity> findMostVisitedRoom();
 
 }

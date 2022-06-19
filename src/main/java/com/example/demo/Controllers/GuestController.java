@@ -147,4 +147,17 @@ public class GuestController {
         return ResponseEntity.ok(this.guestRepository.findUserWhereNameAndSurnameLike());
     }
 
+
+    ////////////////////
+    //findMostFrequentGuest
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/api/findmostfrequentguest",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public ResponseEntity<List<GuestEntity>> findMostFreuqentGuest() {
+        return ResponseEntity.ok(this.guestRepository.findMostFrequentGuest());
+    }
+
 }
