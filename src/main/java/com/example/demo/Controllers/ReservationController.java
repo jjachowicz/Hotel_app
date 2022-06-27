@@ -95,7 +95,7 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationRepository.findReservationEntities(guestId));
     }
 
-    //findReservationEntitiesByRoomid
+
     // select all reservations of a given room
     @RequestMapping(
             method = RequestMethod.GET,

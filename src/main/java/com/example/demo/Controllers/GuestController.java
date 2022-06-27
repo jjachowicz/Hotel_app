@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.util.List;
@@ -133,9 +135,6 @@ public class GuestController {
         return ResponseEntity.ok(guestEntities);
     }
 
-
-    ///////////////////////
-
     // find user by name and surname
     @RequestMapping(
             method = RequestMethod.GET,
@@ -147,8 +146,6 @@ public class GuestController {
         return ResponseEntity.ok(this.guestRepository.findUserWhereNameAndSurnameLike());
     }
 
-
-    ////////////////////
     //findMostFrequentGuest
     @RequestMapping(
             method = RequestMethod.GET,
@@ -159,5 +156,8 @@ public class GuestController {
     public ResponseEntity<List<GuestEntity>> findMostFreuqentGuest() {
         return ResponseEntity.ok(this.guestRepository.findMostFrequentGuest());
     }
+
+
+
 
 }
