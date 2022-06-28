@@ -32,6 +32,7 @@ public class GuestController {
     private GuestPagingRepository guestPagingRepository;
 
     // get list of guests
+    // localhost:8088/api/guests
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/guests",
@@ -43,6 +44,7 @@ public class GuestController {
     }
 
     // get separate guest
+    // localhost:8088/api/guests/{id}
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/guests/{id}",
@@ -54,7 +56,7 @@ public class GuestController {
     }
 
     // create new guest
-    //echo '{"name":"mary", "surname":"smith", "email":"mary@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/create
+    //echo '{"name":"mary", "surname":"smith", "email":"mary@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8088/api/guests/create
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/api/guests/create",
@@ -67,7 +69,6 @@ public class GuestController {
     }
 
     // edit guest
-    // POST http://localhost:8080/api/users/1/update
     // echo '{"name":"chris", "surname":"johnson1", "email":"chris@email.com", "pesel":"123456789", "phoneNumber":"+48 123 456 789"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/guests/edit/1
     @RequestMapping(
             method = RequestMethod.PUT,
@@ -94,6 +95,7 @@ public class GuestController {
     }
 
     // sort guests a-z by name
+    //localhost:8088/api/guests/sortfromatoz
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/guests/sortfromatoz",
@@ -105,6 +107,7 @@ public class GuestController {
     }
 
     // sort guests z-a by name
+    //localhost:8088/api/guests/sortfromztoa
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/guests/sortfromztoa",
@@ -116,7 +119,7 @@ public class GuestController {
     }
 
     // pagination
-    // /api/guests/pagination?page-number=0&page-size=3
+    // localhost:8088/api/guests/pagination?page-number=0&page-size=3
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/guests/pagination",
@@ -136,6 +139,7 @@ public class GuestController {
     }
 
     // find user by name and surname
+    // localhost:8088/api/finduser
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/finduser",
@@ -146,7 +150,8 @@ public class GuestController {
         return ResponseEntity.ok(this.guestRepository.findUserWhereNameAndSurnameLike());
     }
 
-    //findMostFrequentGuest
+    // find most frequent guest
+    // localhost:8088/api/findmostfrequentguest
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/findmostfrequentguest",
@@ -156,8 +161,5 @@ public class GuestController {
     public ResponseEntity<List<GuestEntity>> findMostFreuqentGuest() {
         return ResponseEntity.ok(this.guestRepository.findMostFrequentGuest());
     }
-
-
-
 
 }

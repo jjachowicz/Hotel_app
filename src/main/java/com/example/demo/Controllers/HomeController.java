@@ -10,7 +10,8 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 public class HomeController {
 
-    // http://localhost:8088
+    // communication with second microservice via Rest Template
+    // localhost:8088
     @GetMapping
     @ResponseBody
     public ResponseEntity<String> index(

@@ -23,6 +23,7 @@ public class RoomController {
     private RoomRepository roomRepository;
 
     // list all rooms
+    // localhost:8088/api/rooms
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/rooms",
@@ -34,6 +35,7 @@ public class RoomController {
     }
 
     // list free rooms
+    // localhost:8088/api/freerooms
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/freerooms",
@@ -45,6 +47,7 @@ public class RoomController {
     }
 
     // list room by number
+    // localhost:8088/api/rooms/{id}
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/rooms/{id}",
@@ -56,6 +59,7 @@ public class RoomController {
     }
 
     // find rooms which are bigger than...
+    // localhost:8088/api/biggerrooms
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/biggerrooms",
@@ -66,9 +70,8 @@ public class RoomController {
         return ResponseEntity.ok(this.roomRepository.findRoomsWhereSizeMoreThan());
     }
 
-
-    ////////
     // find most visited rooms
+    // localhost:8088/api/mostvisitedroom
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/mostvisitedroom",
@@ -78,6 +81,4 @@ public class RoomController {
     public ResponseEntity<List<RoomEntity>> getFavouriteRoom() {
         return ResponseEntity.ok(this.roomRepository.findMostVisitedRoom());
     }
-
-
 }

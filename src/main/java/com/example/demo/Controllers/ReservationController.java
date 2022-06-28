@@ -20,6 +20,7 @@ public class ReservationController {
     private ReservationRepository reservationRepository;
 
     // get list of reservations
+    // localhost:8088/api/reservations
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/reservations",
@@ -30,8 +31,8 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationRepository.findAll());
     }
 
-    // add new reservation
-    // echo '{"guest":{"id":1,"name":"chris1","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/create
+    // add a new reservation
+    // echo '{"guest":{"id":1,"name":"chris1","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-07-21"}' | curl -X POST -H "Content-Type: application/json" -d @- http://localhost:8088/api/reservations/create
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/api/reservations/create",
@@ -44,8 +45,7 @@ public class ReservationController {
     }
 
     // delete a reservation
-    // curl -X DELETE  http://localhost:8080/api/reservations/2/remove
-
+    // curl -X DELETE  http://localhost:8088/api/reservations/2/remove
     @RequestMapping(
             value = "/api/reservations/{id}/remove",
             method = RequestMethod.DELETE
@@ -58,9 +58,8 @@ public class ReservationController {
         return " Reservation " + reservationId + " deleted.";
     }
 
-
     // edit a reservation
-    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-08-26"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8080/api/reservations/edit/1
+    // echo '{"guest":{"id":1,"name":"chris","surname":"johnson1","email":"chris@email.com","pesel":"123456789","phoneNumber":"+48 123 456 789"}, "room":{"id":1,"size":30,"pricePerNight":234.0,"reserved":true}, "reservationDate":"2022-08-26"}' | curl -X PUT -H "Content-Type: application/json" -d @- http://localhost:8088/api/reservations/edit/1
     @RequestMapping(
             method = RequestMethod.PUT,
             value = "api/reservations/edit/{id}",
@@ -81,10 +80,8 @@ public class ReservationController {
         return ResponseEntity.of(foundReservationOptional);
     }
 
-
-
-    /////////
     // select all reservations of a given guest
+    // localhost:8088/api/userreservations/{id}
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/userreservations/{id}",
@@ -95,8 +92,8 @@ public class ReservationController {
         return ResponseEntity.ok(this.reservationRepository.findReservationEntities(guestId));
     }
 
-
     // select all reservations of a given room
+    // localhost:8088/api/roomreservations/{id}
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/roomreservations/{id}",
